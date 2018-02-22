@@ -1,7 +1,19 @@
 -- MANUAL CONTENT CURATION
 
+-- Remove any tabs and new line characters from the imported guidance
+UPDATE `roadmaptest`.`guidances` SET `text` = REPLACE(REPLACE(REPLACE(`text`, '\n', '<br />'), '\r', ''), '\t', '  ');
+
+-- Enable Back the constraints
+SET FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE `roadmaptest`.`guidances` ENABLE KEYS;
+-- ******************************************************************************
+-- ******************************************************************************
+-- ******************************************************************************
+
 -- Set the default template (currently using DCC generic template)
 UPDATE `roadmaptest`.`templates` SET is_default = 1 WHERE id = 133;
+-- Set empty links in Templates.
+UPDATE `roadmaptest`.`templates` SET `links` = '{"funder":[],"sample_plan":[]}';
 
 -- ******************************************************************************
 -- ******************************************************************************
@@ -448,7 +460,6 @@ INSERT INTO `roadmaptest`.`themes_in_guidance` (`guidance_id`, `theme_id`) (
 -- ******************************************************************************
 -- ******************************************************************************
 
-
 -- Auto-theme questions based on keywords
 INSERT INTO `roadmaptest`.`questions_themes` (`question_id`, `theme_id`) (
   SELECT `id`, 
@@ -536,7 +547,6 @@ INSERT INTO `roadmaptest`.`questions_themes` (`question_id`, `theme_id`) (
   WHERE LCASE(`text`) LIKE '% buget%'
 );
 
-
 -- ******************************************************************************
 -- ******************************************************************************
 -- ******************************************************************************
@@ -564,163 +574,264 @@ INSERT INTO `roadmaptest`.`plans_guidance_groups` (`plan_id`, `guidance_group_id
 -- Insert all of the schema migrations so that they do not try to run during the next deploy!
 TRUNCATE TABLE `roadmaptest`.`schema_migrations`;
 
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130603140800');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130603143109');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611111340');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611111359');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611113325');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611132258');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611133033');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611135155');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611135806');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611140229');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611141026');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611151644');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611151704');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611151729');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611151750');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611152208');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611153828');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611153921');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611154055');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130611154109');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130612113321');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130612133806');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130612133938');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130621101824');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130625125419');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130705113828');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130705145146');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130705151214');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130708092900');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130717093801');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130717093814');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130717115239');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130717125231');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130717125748');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130717130107');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130724112909');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130724123043');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130730102219');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130731124011');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130731124532');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130731130811');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130731131354');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130731131846');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130731132153');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130731133039');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130812100100');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130902141025');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130902141150');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130902142403');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130903072531');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130903084409');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130903123015');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130905073232');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130913134657');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130913161023');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130918130838');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130918154825');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130926121718');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130927091932');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20130927092206');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20131108151505');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20131111090129');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20131118094629');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20131126133804');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20131126135301');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20131127100520');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20131128150644');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20131129143550');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20131212111049');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140210121753');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140214120652');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140214155629');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140218113637');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140331160554');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140331162130');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140407105254');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140407153318');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140423200913');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140429114226');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140604092907');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20140707143840');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150415150436');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416092404');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416101954');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416103652');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416105712');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416112327');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416113232');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416113625');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416114743');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416120233');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416131657');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150416133602');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150427110644');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150427145433');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150430135839');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150501150321');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150518153927');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150805105542');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20150809210811');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20151208142029');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20151208142836');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160105114044');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160603124621');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160609081745');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160615095101');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160719102542');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160719140055');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160729091510');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160805101216');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160805103704');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160805103912');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160805105928');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160805105941');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160810193149');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160822130601');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20160822130701');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161021100420');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161024163546');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161024163920');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161102221313');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161115105808');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161115114309');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161115121831');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161115123658');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161115124634');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161115132137');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161115143222');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161122152339');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161205095623');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161205095624');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161205095625');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161206122926');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20161208122123');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170124235829');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170130173049');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170201194502');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170227122226');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170302111544');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170303220255');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170412143945');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170421170849');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170427110141');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170428083711');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170516184429');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170606215136');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170607154433');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170619173045');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170702012742');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170710182442');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170712084314');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20170719114516');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20171013152425');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20171024214257');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20171024220146');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20171025200301');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20171102164156');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20171102185518');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20171122195828');
-INSERT INTO `roadmaptest`.`schema_migrations` (`version`) VALUES ('20171124133802');
+## SCHEMA MIGRATIONS AS OF DMP2-STAGE DB
+INSERT INTO `schema_migrations` (`version`)
+VALUES
+	(''),
+	('20130603140800'),
+	('20130603143109'),
+	('20130611111340'),
+	('20130611111359'),
+	('20130611113325'),
+	('20130611132258'),
+	('20130611133033'),
+	('20130611135155'),
+	('20130611135806'),
+	('20130611140229'),
+	('20130611141026'),
+	('20130611151644'),
+	('20130611151704'),
+	('20130611151729'),
+	('20130611151750'),
+	('20130611152208'),
+	('20130611153828'),
+	('20130611153921'),
+	('20130611154055'),
+	('20130611154109'),
+	('20130612113321'),
+	('20130612133806'),
+	('20130612133938'),
+	('20130621101824'),
+	('20130625125419'),
+	('20130705113828'),
+	('20130705145146'),
+	('20130705151214'),
+	('20130708092900'),
+	('20130717093801'),
+	('20130717093814'),
+	('20130717115239'),
+	('20130717125231'),
+	('20130717125748'),
+	('20130717130107'),
+	('20130724112909'),
+	('20130724123043'),
+	('20130730102219'),
+	('20130731124011'),
+	('20130731124532'),
+	('20130731130811'),
+	('20130731131354'),
+	('20130731131846'),
+	('20130731132153'),
+	('20130731133039'),
+	('20130812100100'),
+	('20130902141025'),
+	('20130902141150'),
+	('20130902142403'),
+	('20130903072531'),
+	('20130903084409'),
+	('20130903123015'),
+	('20130905073232'),
+	('20130913134657'),
+	('20130913161023'),
+	('20130918130838'),
+	('20130918154825'),
+	('20130926121718'),
+	('20130927091932'),
+	('20130927092206'),
+	('20131108151505'),
+	('20131111090129'),
+	('20131118094629'),
+	('20131126133804'),
+	('20131126135301'),
+	('20131127100520'),
+	('20131128150644'),
+	('20131129143550'),
+	('20131212111049'),
+	('20140210121753'),
+	('20140214120652'),
+	('20140214155629'),
+	('20140218113637'),
+	('20140331160554'),
+	('20140331162130'),
+	('20140407105254'),
+	('20140407153318'),
+	('20140423200913'),
+	('20140429114226'),
+	('20140604092907'),
+	('20140707143840'),
+	('20150415150436'),
+	('20150416092404'),
+	('20150416101954'),
+	('20150416103652'),
+	('20150416105712'),
+	('20150416112327'),
+	('20150416113232'),
+	('20150416113625'),
+	('20150416114743'),
+	('20150416120233'),
+	('20150416131657'),
+	('20150416133602'),
+	('20150427110644'),
+	('20150427145433'),
+	('20150430135839'),
+	('20150501150321'),
+	('20150518153927'),
+	('20150805105542'),
+	('20150809210811'),
+	('20151208142029'),
+	('20151208142836'),
+	('20160105114044'),
+	('20160603124621'),
+	('20160609081745'),
+	('20160615095101'),
+	('20160719102542'),
+	('20160719140055'),
+	('20160729091510'),
+	('20160805101216'),
+	('20160805103704'),
+	('20160805103912'),
+	('20160805105928'),
+	('20160805105941'),
+	('20160810193149'),
+	('20160822130601'),
+	('20160822130701'),
+	('20161021100420'),
+	('20161024163546'),
+	('20161024163920'),
+	('20161102221313'),
+	('20161115105808'),
+	('20161115114309'),
+	('20161115121831'),
+	('20161115123658'),
+	('20161115124634'),
+	('20161115132137'),
+	('20161115143222'),
+	('20161122152339'),
+	('20161205095623'),
+	('20161205095624'),
+	('20161205095625'),
+	('20161206122926'),
+	('20161208122123'),
+	('20170124235829'),
+	('20170130173049'),
+	('20170201194502'),
+	('20170227122226'),
+	('20170302111544'),
+	('20170303220255'),
+	('20170412143945'),
+	('20170421170849'),
+	('20170427110141'),
+	('20170428083711'),
+	('20170516184429'),
+	('20170606215136'),
+	('20170607154433'),
+	('20170619173045'),
+	('20170702012742'),
+	('20170710182442'),
+	('20170712084314'),
+	('20170719114516'),
+	('20171013152425'),
+	('20171024214257'),
+	('20171024220146'),
+	('20171025200301'),
+	('20171102164156'),
+	('20171102185518'),
+	('20171122195828'),
+	('20171124133802'),
+	('20171130195230'),
+	('20180123161959'),
+	('20180126210659'),
+	('20180131181949'),
+	('20180212124444');
+
+
+##NEW SCHEMA MIGRATIONS FORM DMPTOOL PRODUCTION
+INSERT INTO `schema_migrations` (`version`)
+VALUES
+	('20130520225000'),
+	('20130521210544'),
+	('20130521214328'),
+	('20130521222723'),
+	('20130521230520'),
+	('20130522210011'),
+	('20130522212903'),
+	('20130522214609'),
+	('20130522215808'),
+	('20130522220525'),
+	('20130522222113'),
+	('20130522223908'),
+	('20130522231822'),
+	('20130524172821'),
+	('20130524183609'),
+	('20130524212856'),
+	('20130528174232'),
+	('20130528220209'),
+	('20130528230037'),
+	('20130528232150'),
+	('20130606202308'),
+	('20130725190003'),
+	('20130725190156'),
+	('20130725190320'),
+	('20130829211817'),
+	('20130829212950'),
+	('20130904141459'),
+	('20130916023157'),
+	('20130916030208'),
+	('20130916174701'),
+	('20130927230618'),
+	('20130927230744'),
+	('20130927231128'),
+	('20131018223029'),
+	('20131022190255'),
+	('20131023175718'),
+	('20131025024323'),
+	('20131025100451'),
+	('20131025100957'),
+	('20131028072115'),
+	('20131028075853'),
+	('20131031174839'),
+	('20131106224027'),
+	('20131112185027'),
+	('20131114000149'),
+	('20140109190401'),
+	('20140109195002'),
+	('20140109195750'),
+	('20140110192327'),
+	('20140122192429'),
+	('20140122193750'),
+	('20140122193925'),
+	('20140122210810'),
+	('20140123010621'),
+	('20140130001956'),
+	('20140130003752'),
+	('20140130004003'),
+	('20140130004124'),
+	('20140130010525'),
+	('20140130213130'),
+	('20140130232451'),
+	('20140204195127'),
+	('20140206225417'),
+	('20140207062910'),
+	('20140210194003'),
+	('20140221005131'),
+	('20140228221118'),
+	('20140307104348'),
+	('20140311185612'),
+	('20140311185831'),
+	('20140311185957'),
+	('20140311190444'),
+	('20140311193553'),
+	('20140311193933'),
+	('20140311221831'),
+	('20140312212258'),
+	('20140402224254'),
+	('20140403204948'),
+	('20140922213555'),
+	('20140929210607'),
+	('20150204185430'),
+	('20151214170435'),
+	('20160801082200'),
+	('20160913112300'),
+	('20161118170249'),
+	('20161118170756'),
+	('20161118171513');

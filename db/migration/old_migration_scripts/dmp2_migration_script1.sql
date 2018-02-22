@@ -1,13 +1,3 @@
--- # create table sample plans in roadmaptest, similar to that in dmp2.
-DROP TABLE IF EXISTS `roadmaptest`.`sample_plans`;
-CREATE TABLE `roadmaptest`.`sample_plans`(
-      id         INT,
-      url        VARCHAR(255),
-      label      VARCHAR(255),
-      template_id   INT,
-      created_at     DATETIME,
-      updated_at    DATETIME);
-
 -- # create table question_format_labels in roadmaptest.
 DROP TABLE IF EXISTS `roadmaptest`.`question_format_labels`;
 CREATE TABLE `roadmaptest`.`question_format_labels`(
@@ -105,15 +95,15 @@ SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE `roadmaptest`.`perms`;
 
 INSERT INTO `roadmaptest`.`perms`(
-         `id`,   `name`,         `created_at`,      `updated_at`)
-VALUES  (1,   'admin',         '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
-       (2,   'org_admin',       '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
-       (3,    'add_organisations',   '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
-       (4,   'change_org_affiliation','2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
+        `id`,   `name`,             `created_at`,           `updated_at`)
+VALUES (1,   'admin',               '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
+       (2,   'org_admin',           '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
+       (3,   'add_organisations',   '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
+       (4,   'change_org_affiliation','2011-08-03 11:48:40','2011-08-03 11:48:40'),
        (5,   'grant_permissions',   '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
        (6,   'modify_templates',    '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
-       (7,   'modify_guidance',    '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
-       (8,   'use_api',        '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
+       (7,   'modify_guidance',     '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
+       (8,   'use_api',             '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
        (9,   'change_org_details',  '2011-08-03 11:48:40',  '2011-08-03 11:48:40'),
        (10,   'grant_api_to_orgs',  '2011-08-03 11:48:40',  '2011-08-03 11:48:40');      
 
@@ -128,15 +118,15 @@ SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE `roadmaptest`.`question_formats`;
 
 INSERT INTO `roadmaptest`.`question_formats`(
-       `id`, `title`,       `description`,   `created_at`,       `updated_at`,      `option_based`,  `formattype`)
-VALUES  (1,    'Text area',      NULL,     '2014-04-01 08:53:26',  '2014-04-01 08:53:26',    0,        0),
-     (2,    'Text field',      NULL,     '2014-04-01 08:54:20',  '2017-06-06 14:43:12',    0,        1),
-     (3,    'Radio buttons',    NULL,     '2014-04-01 08:55:38',  '2017-06-06 14:43:12',    1,        2),
-     (4,    'Check box',      NULL,     '2014-04-01 08:56:45',  '2017-06-06 14:43:12',    1,        3),
-     (5,    'Dropdown',      NULL,     '2014-04-01 08:57:46',  '2017-06-06 14:43:12',    1,        4),
-     (6,    'Multi select box',  NULL,     '2014-04-01 08:59:24',  '2017-06-06 14:43:12',    1,        5),  
-     (7,    'Numeric',      NULL,     '2014-04-01 08:59:24',  '2017-06-06 14:43:12',    1,        6),  
-     (8,    'Date',        NULL,     '2014-04-01 08:59:24',  '2017-06-06 14:43:12',    1,        7);
+        `id`, `title`,          `description`,   `created_at`,       `updated_at`,          `option_based`,  `formattype`)
+VALUES  (1,    'Text area',         NULL,     '2014-04-01 08:53:26',  '2014-04-01 08:53:26',    0,        0),
+        (2,    'Text field',        NULL,     '2014-04-01 08:54:20',  '2017-06-06 14:43:12',    0,        1),
+        (3,    'Radio buttons',     NULL,     '2014-04-01 08:55:38',  '2017-06-06 14:43:12',    1,        2),
+        (4,    'Check box',         NULL,     '2014-04-01 08:56:45',  '2017-06-06 14:43:12',    1,        3),
+        (5,    'Dropdown',          NULL,     '2014-04-01 08:57:46',  '2017-06-06 14:43:12',    1,        4),
+        (6,    'Multi select box',  NULL,     '2014-04-01 08:59:24',  '2017-06-06 14:43:12',    1,        5),  
+        (7,    'Numeric',           NULL,     '2014-04-01 08:59:24',  '2017-06-06 14:43:12',    1,        6),  
+        (8,    'Date',              NULL,     '2014-04-01 08:59:24',  '2017-06-06 14:43:12',    1,        7);
 
 -- Enable Back the constraints
 SET FOREIGN_KEY_CHECKS = 1;
@@ -151,8 +141,8 @@ TRUNCATE TABLE `roadmaptest`.`regions`;
 INSERT into `roadmaptest`.`regions`(
       `id`,   `abbreviation`,   `description`,           `name`,     `super_region_id`)
 VALUES  (1,   'uk',         'default region',         'UK',          NULL),
-     (2,    'de',        NULL,              'DE',         NULL),
-     (3,    'horizon',      'European super region',    'Horizon2020',    NULL);
+        (2,    'de',        NULL,              'DE',         NULL),
+        (3,    'horizon',      'European super region',    'Horizon2020',    NULL);
 
 -- Enable Back the constraints
 SET FOREIGN_KEY_CHECKS = 1;
