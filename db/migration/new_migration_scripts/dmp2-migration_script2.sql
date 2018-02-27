@@ -187,20 +187,20 @@ ALTER TABLE `roadmap`.`perms` ENABLE KEYS;
 
 -- # Copy dmp2 Labels into roadmap Question Format labels table
 -- Disable the constraints
-ALTER TABLE `roadmap`.`question_format_labels` DISABLE KEYS;
-SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE TABLE `roadmap`.`question_format_labels`;
+-- ALTER TABLE `roadmap`.`question_format_labels` DISABLE KEYS;
+-- SET FOREIGN_KEY_CHECKS = 0;
+-- TRUNCATE TABLE `roadmap`.`question_format_labels`;
 
-INSERT INTO `roadmap`.`question_format_labels`(
-  `id`,   `description`,      `question_id`,       `number`,     `created_at`,   `updated_at`)
+-- INSERT INTO `roadmap`.`question_format_labels`(
+--   `id`,   `description`,      `question_id`,       `number`,     `created_at`,   `updated_at`)
   
-SELECT
-  `id`,   `desc`,       `requirement_id`,     `position`,    `created_at`,   `updated_at`
-FROM `dmptool`.`labels`;
+-- SELECT
+--   `id`,   `desc`,       `requirement_id`,     `position`,    `created_at`,   `updated_at`
+-- FROM `dmptool`.`labels`;
 
--- Enable Back the constraints
-SET FOREIGN_KEY_CHECKS = 1;
-ALTER TABLE `roadmap`.`question_format_labels` ENABLE KEYS;
+-- -- Enable Back the constraints
+-- SET FOREIGN_KEY_CHECKS = 1;
+-- ALTER TABLE `roadmap`.`question_format_labels` ENABLE KEYS;
 -- ***********************************************************************************************************************
 -- ***********************************************************************************************************************
 
@@ -440,3 +440,32 @@ ALTER TABLE `roadmap`.`notes` ENABLE KEYS;
 
 -- *********************************************************************************************************************
 -- *********************************************************************************************************************
+
+
+-- # Create a table to import Ldap Users info into Roadmap schema.
+-- # Then import respective users' LDap details into Users table.
+CREATE TABLE IF NOT EXISTS `roadmap`.`match_ldap_users`
+(display_name varchar(255), 
+ user_id int,
+ email varchar(255),
+ ldap_uid varchar(255),
+ ldap_password  varchar(255));
+
+INSERT INTO `roadmap`.`match_ldap_users` ( 
+  `display_name`, `user_id`, `ldap_uid`, `ldap_password`)
+
+SELECT 
+  `display_name`, `user_id`, `ldap_uid`, `ldap_password`
+FROM `dmptool`.`match_ldap_users`;
+
+UPDATE `roadmap`.`users` 
+INNER JOIN `roadmap`.`match_ldap_users`
+ON `users`.`id` = `match_ldap_users`.`user_id`
+SET `users`.`ldap_username` = `match_ldap_users`.`ldap_uid`; 
+
+UPDATE `roadmap`.`users` 
+INNER JOIN `roadmap`.`match_ldap_users`
+ON `users` .`id` = `match_ldap_users`.`user_id`
+SET `users` .`ldap_password` = `match_ldap_users`.`ldap_password`; 
+
+DROP TABLE IF EXISTS `roadmap`.`match_ldap_users`;

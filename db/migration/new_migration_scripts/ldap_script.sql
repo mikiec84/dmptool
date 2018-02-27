@@ -38,16 +38,17 @@ SELECT * FROM `match_ldap_users`;
 -- ***********************************************************************************************************************
 
 # STEP 3 - Udpate Users table with their ldap info from this table and then drop the tables.
+# Step 3 will be a MigrationScript2.sql file
 
-UPDATE `roadmap`.`users` 
-INNER JOIN `roadmap`.`match_ldap_users`
-ON `users`.`id` = `match_ldap_users`.`user_id`
-SET `users`.`ldap_username` = `match_ldap_users`.`ldap_uid`; 
+-- UPDATE `roadmap`.`users` 
+-- INNER JOIN `roadmap`.`match_ldap_users`
+-- ON `users`.`id` = `match_ldap_users`.`user_id`
+-- SET `users`.`ldap_username` = `match_ldap_users`.`ldap_uid`; 
 
-UPDATE `roadmap`.`users` 
-INNER JOIN `roadmap`.`match_ldap_users`
-ON `users` .`id` = `match_ldap_users`.`user_id`
-SET `users` .`ldap_password` = `match_ldap_users`.`ldap_password`; 
+-- UPDATE `roadmap`.`users` 
+-- INNER JOIN `roadmap`.`match_ldap_users`
+-- ON `users` .`id` = `match_ldap_users`.`user_id`
+-- SET `users` .`ldap_password` = `match_ldap_users`.`ldap_password`; 
 
 DROP TABLE IF EXISTS `roadmap`.`ldap_users`;
 DROP TABLE IF EXISTS `roadmap`.`match_ldap_users`;

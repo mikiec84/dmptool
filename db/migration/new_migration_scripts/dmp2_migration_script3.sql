@@ -14,6 +14,13 @@ UPDATE `languages` SET `default_language` = 1 WHERE `abbreviation` = 'en_US';
 -- ******************************************************************************
 -- ******************************************************************************
 
+
+UPDATE `roadmap`.`org_identifiers` SET `attrs` = '{"domain":""}' WHERE `identifier` = '';
+
+-- ******************************************************************************
+-- ******************************************************************************
+-- ******************************************************************************
+
 -- Update the Org records 
 UPDATE `orgs` SET `name` = 'Alfred P. Sloan Foundation', `abbreviation` = 'Sloan', `org_type` = 2 WHERE `id` = 141;
 UPDATE `orgs` SET `name` = 'American University (AU)', `abbreviation` = 'AU', `org_type` = 1 WHERE `id` = 56;
@@ -229,7 +236,18 @@ UPDATE `orgs` SET `name` = 'Western Carolina University (WCU)', `abbreviation` =
 UPDATE `orgs` SET `name` = 'Western Michigan University', `abbreviation` = 'WMich', `org_type` = 1 WHERE `id` = 227;
 UPDATE `orgs` SET `name` = 'Woods Hole Oceanographic Institution (WHOI)', `abbreviation` = 'WHOI', `org_type` = 1 WHERE `id` = 142;
 UPDATE `orgs` SET `name` = 'Yale University', `abbreviation` = 'Yale', `org_type` = 1 WHERE `id` = 39;
-
+UPDATE `orgs` SET `name` = 'University of Missouri-St. Louis (UMSL)', `abbreviation` = 'UMSL', `org_type` = 1 WHERE `id` = 230;
+UPDATE `orgs` SET `name` = 'University of Campinas (UNICAMP)', `abbreviation` = 'UNICAMP', `org_type` = 1 WHERE `id` = 231;
+UPDATE `orgs` SET `name` = 'North Dakota State University (NDSU)', `abbreviation` = 'NDSU', `org_type` = 1 WHERE `id` = 232;
+UPDATE `orgs` SET `name` = 'National University of Singapore (NUS)', `abbreviation` = 'NUS', `org_type` = 1 WHERE `id` = 233;
+UPDATE `orgs` SET `name` = 'Mount Holyoke College (Mt Holyoke)', `abbreviation` = 'Mt Holyoke', `org_type` = 1 WHERE `id` = 234;
+UPDATE `orgs` SET `name` = 'University of Northern Iowa (UNI)', `abbreviation` = 'UNI', `org_type` = 1 WHERE `id` = 235;
+UPDATE `orgs` SET `name` = 'Rochester Institute of Technology (RIT)', `abbreviation` = 'RIT', `org_type` = 1 WHERE `id` = 236;
+UPDATE `orgs` SET `name` = 'Seton Hall University (SHU)', `abbreviation` = 'SHU', `org_type` = 1 WHERE `id` = 237;
+UPDATE `orgs` SET `name` = 'University of South Florida (USF)', `abbreviation` = 'USF', `org_type` = 1 WHERE `id` = 238;
+UPDATE `orgs` SET `name` = 'University of Vermont (UVM)', `abbreviation` = 'UVM', `org_type` = 1 WHERE `id` = 239;
+UPDATE `orgs` SET `name` = 'South Texas College (STC)', `abbreviation` = 'STC', `org_type` = 1 WHERE `id` = 240;
+UPDATE `orgs` SET `name` = 'American University of Beirut (AUB)', `abbreviation` = 'AUB', `org_type` = 1 WHERE `id` = 241;
 -- ******************************************************************************
 -- ******************************************************************************
 -- ******************************************************************************
@@ -272,15 +290,16 @@ INSERT INTO `roadmap`.`guidance_groups`(
   `name`,               `org_id`,     `optional_subset`,  `published`,   `created_at`,     `updated_at`)
 
 VALUES
-  ('North Dakota State University Guidance',  232, 0, 1, '2017-12-06 16:21:06', '2017-12-06 16:21:06'),
-  ('National University of Singapore Guidance', 233, 0, 1, '2018-01-23 17:39:13',  '2018-01-24 01:14:35'),
-  ('Mount Holyoke College Guidance',  234, 0, 1, '2018-01-23 23:25:39', '2018-01-25 16:33:10'),
-  ('University of Northern Iowa Guidance',  235, 0, 1, '2018-01-31 16:54:19', '2018-01-31 16:54:19'),
-  ('Rochester Institute of Technology Guidance',  236, 0, 1, '2018-02-07 00:06:07', '2018-02-13 22:40:20'),
-  ('Seton Hall University Guidance',  237, 0, 1, '2018-02-09 20:32:23', '2018-02-12 17:50:46'),
-  ('University of South Florida Guidance',  238, 0, 1, '2018-02-14 19:36:45', '2018-02-14 19:36:45'),
-  ('University of Vermont Guidance',  239, 0, 1, '2018-02-14 21:00:30', '2018-02-14 21:00:30'),
-  ('South Texas College Guidance',  240, 0, 1, '2018-02-20 17:35:10','2018-02-20 17:35:10');
+  ('NDSU',  232, 0, 1, '2017-12-06 16:21:06', '2017-12-06 16:21:06'),
+  ('NUS', 233, 0, 1, '2018-01-23 17:39:13',  '2018-01-24 01:14:35'),
+  ('Mt Holyoke',  234, 0, 1, '2018-01-23 23:25:39', '2018-01-25 16:33:10'),
+  ('UNI',  235, 0, 1, '2018-01-31 16:54:19', '2018-01-31 16:54:19'),
+  ('RIT',  236, 0, 1, '2018-02-07 00:06:07', '2018-02-13 22:40:20'),
+  ('SHU',  237, 0, 1, '2018-02-09 20:32:23', '2018-02-12 17:50:46'),
+  ('USF',  238, 0, 1, '2018-02-14 19:36:45', '2018-02-14 19:36:45'),
+  ('UVM',  239, 0, 1, '2018-02-14 21:00:30', '2018-02-14 21:00:30'),
+  ('STC',  240, 0, 1, '2018-02-20 17:35:10', '2018-02-20 17:35:10'),
+  ('AUB',  241, 0, 1, '2018-02-22 19:03:57', '2018-02-22 19:03:57');
 
 -- Enable Back the constraints
 SET FOREIGN_KEY_CHECKS = 1;
@@ -288,3 +307,6 @@ ALTER TABLE `roadmap`.`guidance_groups` ENABLE KEYS;
 
 -- **********************************************************************************************************************
 -- **********************************************************************************************************************
+
+## Rememeber to Make Brian Riley, Stephanie Simms, Marisa Strong, Perry Willet, Bhavi Vedula ucop accounts 
+## as super admins in tool.
